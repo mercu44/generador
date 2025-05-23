@@ -2,14 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Generador de Contrato</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Contrato</title>
   <style>
     body {
-      font-family: "Segoe UI", sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       background-color: #f4f4f8;
       margin: 0;
-      padding: 0;
+      padding: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -18,100 +18,110 @@
 
     .container {
       background: white;
-      padding: 30px 20px;
-      max-width: 500px;
-      width: 90%;
+      padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
     }
 
     h1 {
       text-align: center;
-      font-size: 22px;
+      font-size: 24px;
       margin-bottom: 20px;
-      color: #333;
     }
 
     label {
       font-weight: 600;
       display: block;
+      margin-top: 15px;
       margin-bottom: 5px;
-      color: #333;
     }
 
     input {
       width: 100%;
       padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
       font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
     }
 
     button {
+      margin-top: 25px;
       width: 100%;
-      padding: 12px;
       background-color: #007bff;
       color: white;
+      border: none;
+      padding: 12px;
       font-size: 16px;
       font-weight: bold;
-      border: none;
       border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.2s;
+      transition: background-color 0.2s ease-in-out;
     }
 
     button:hover {
       background-color: #0056b3;
     }
 
-    @media (max-width: 480px) {
-      .container {
-        padding: 20px 15px;
-      }
+    .link {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .link a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Formulario de Contrato</h1>
+    <h1>{{ 'Editar' if contrato else 'Nuevo' }} Contrato</h1>
     <form method="POST">
       <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" required>
+      <input type="text" id="nombre" name="nombre" required value="{{ contrato.nombre if contrato else '' }}">
 
       <label for="dni">DNI:</label>
-      <input type="text" id="dni" name="dni" required>
+      <input type="text" id="dni" name="dni" required value="{{ contrato.dni if contrato else '' }}">
 
       <label for="residencia">Residencia:</label>
-      <input type="text" id="residencia" name="residencia" required>
+      <input type="text" id="residencia" name="residencia" required value="{{ contrato.residencia if contrato else '' }}">
 
       <label for="trastero">Número de trastero:</label>
-      <input type="number" id="trastero" name="trastero" required>
+      <input type="text" id="trastero" name="trastero" required value="{{ contrato.trastero if contrato else '' }}">
 
       <label for="superficie">Superficie:</label>
-      <input type="text" id="superficie" name="superficie" required>
+      <input type="text" id="superficie" name="superficie" required value="{{ contrato.superficie if contrato else '' }}">
 
       <label for="fechainicio">Fecha de inicio:</label>
-      <input type="text" id="fechainicio" name="fechainicio" required>
+      <input type="text" id="fechainicio" name="fechainicio" required value="{{ contrato.fechainicio if contrato else '' }}">
 
       <label for="fechafinal">Fecha de finalización:</label>
-      <input type="text" id="fechafinal" name="fechafinal" required>
+      <input type="text" id="fechafinal" name="fechafinal" required value="{{ contrato.fechafinal if contrato else '' }}">
 
-      <label for="preciooriginal">Precio antes de IVA:</label>
-      <input type="text" id="preciooriginal" name="preciooriginal" required>
+      <label for="preciooriginal">Precio original (€):</label>
+      <input type="text" id="preciooriginal" name="preciooriginal" required value="{{ contrato.preciooriginal if contrato else '' }}">
 
-      <label for="iva">IVA:</label>
-      <input type="text" id="iva" name="iva" required>
+      <label for="iva">IVA (€):</label>
+      <input type="text" id="iva" name="iva" required value="{{ contrato.iva if contrato else '' }}">
 
-      <label for="preciototal">Precio total:</label>
-      <input type="text" id="preciototal" name="preciototal" required>
+      <label for="preciototal">Precio total (€):</label>
+      <input type="text" id="preciototal" name="preciototal" required value="{{ contrato.preciototal if contrato else '' }}">
 
       <label for="fechafirma">Fecha de firma:</label>
-      <input type="text" id="fechafirma" name="fechafirma" required>
+      <input type="text" id="fechafirma" name="fechafirma" required value="{{ contrato.fechafirma if contrato else '' }}">
 
       <button type="submit">Generar PDF</button>
     </form>
+    <div class="link">
+      <a href="{{ url_for('historial') }}">Ver historial de contratos</a>
+    </div>
   </div>
 </body>
 </html>
