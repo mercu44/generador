@@ -23,7 +23,9 @@ def formulario():
             "superficie": request.form["superficie"],
             "fechainicio": request.form["fechainicio"],
             "fechafinal": request.form["fechafinal"],
-            "precio": request.form["precio"],
+            "preciooriginal": request.form["preciooriginal"],
+            "iva": request.form["iva"],
+            "preciototal": request.form["preciototal"],
             "fechafirma": request.form["fechafirma"]
         }
 

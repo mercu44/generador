@@ -1,22 +1,117 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Generador de Contrato</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generador de Contrato</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f4f4f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px 20px;
+      max-width: 500px;
+      width: 90%;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px 15px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
     <h1>Formulario de Contrato</h1>
     <form method="POST">
-        <p>Nombre: <input type="text" name="nombre" required></p>
-        <p>DNI: <input type="text" name="dni" required></p>
-        <p>Residencia: <input type="text" name="residencia" required></p>
-        <p>Número de trastero: <input type="number" name="trastero" required></p>
-        <p>Superficie: <input type="text" name="superficie" required></p>
-        <p>Fecha de inicio: <input type="text" name="fechainicio" required></p>
-        <p>Fecha de finalización: <input type="text" name="fechafinal" required></p>
-        <p>Precio completo: <input type="text" name="precio" required></p>
-        <p>Fecha de firma: <input type="text" name="fechafirma" required></p>
-        <button type="submit">Generar PDF</button>
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required>
+
+      <label for="dni">DNI:</label>
+      <input type="text" id="dni" name="dni" required>
+
+      <label for="residencia">Residencia:</label>
+      <input type="text" id="residencia" name="residencia" required>
+
+      <label for="trastero">Número de trastero:</label>
+      <input type="number" id="trastero" name="trastero" required>
+
+      <label for="superficie">Superficie:</label>
+      <input type="text" id="superficie" name="superficie" required>
+
+      <label for="fechainicio">Fecha de inicio:</label>
+      <input type="text" id="fechainicio" name="fechainicio" required>
+
+      <label for="fechafinal">Fecha de finalización:</label>
+      <input type="text" id="fechafinal" name="fechafinal" required>
+
+      <label for="preciooriginal">Precio antes de IVA:</label>
+      <input type="text" id="preciooriginal" name="preciooriginal" required>
+
+      <label for="iva">IVA:</label>
+      <input type="text" id="iva" name="iva" required>
+
+      <label for="preciototal">Precio total:</label>
+      <input type="text" id="preciototal" name="preciototal" required>
+
+      <label for="fechafirma">Fecha de firma:</label>
+      <input type="text" id="fechafirma" name="fechafirma" required>
+
+      <button type="submit">Generar PDF</button>
     </form>
+  </div>
 </body>
 </html>
