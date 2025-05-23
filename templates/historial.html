@@ -3,127 +3,164 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Historial</title>
+  <title>Historial de Contratos</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f4f8;
-      padding: 20px;
-      margin: 0;
+    :root {
+      --primary: #007bff;
+      --primary-dark: #0056b3;
+      --bg-light: #f9f9fb;
+      --text-color: #333;
     }
 
-    .tabla {
-      background: white;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-color);
       padding: 20px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 25px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      max-width: 1000px;
-      margin: auto;
-      overflow-x: auto;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
     }
 
     h1 {
       text-align: center;
-      font-size: 24px;
       margin-bottom: 20px;
+      font-size: 26px;
+      color: var(--primary-dark);
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 14px;
-      min-width: 500px;
+      margin-top: 15px;
+    }
+
+    thead {
+      background-color: #eef2f6;
     }
 
     th, td {
-      padding: 12px 10px;
       text-align: left;
+      padding: 12px 10px;
       border-bottom: 1px solid #ddd;
+      font-size: 15px;
     }
 
     th {
-      background-color: #f0f0f0;
+      font-weight: bold;
     }
 
-    a {
-      color: #007bff;
+    td a {
+      color: var(--primary);
       text-decoration: none;
+      font-weight: 500;
     }
 
-    a:hover {
+    td a:hover {
       text-decoration: underline;
     }
 
     .volver {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 30px;
     }
 
     .volver a {
       display: inline-block;
-      padding: 10px 15px;
-      background-color: #007bff;
-      color: white;
-      border-radius: 6px;
+      background-color: var(--primary);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
       text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
     }
 
     .volver a:hover {
-      background-color: #0056b3;
+      background-color: var(--primary-dark);
     }
 
     @media (max-width: 600px) {
-      table {
-        font-size: 12px;
+      .container {
+        padding: 15px;
       }
 
-      th, td {
-        padding: 8px 6px;
+      table, thead, tbody, th, td, tr {
+        display: block;
       }
 
-      h1 {
-        font-size: 20px;
+      thead {
+        display: none;
       }
 
-      .volver a {
-        padding: 8px 12px;
-        font-size: 14px;
+      tr {
+        margin-bottom: 15px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+      }
+
+      td {
+        text-align: right;
+        position: relative;
+        padding-left: 50%;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        font-weight: bold;
+        text-align: left;
       }
     }
   </style>
 </head>
 <body>
-  <div class="tabla">
+  <div class="container">
     <h1>Historial de Contratos</h1>
+
     {% if contratos %}
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>DNI</th>
-            <th>Trastero</th>
-            <th>Firma</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for c in contratos %}
-          <tr>
-            <td>{{ c.nombre }}</td>
-            <td>{{ c.dni }}</td>
-            <td>{{ c.trastero }}</td>
-            <td>{{ c.fechafirma }}</td>
-            <td><a href="/editar/{{ c.id }}">Editar</a></td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>DNI</th>
+          <th>Trastero</th>
+          <th>Firma</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in contratos %}
+        <tr>
+          <td data-label="Nombre">{{ c.nombre }}</td>
+          <td data-label="DNI">{{ c.dni }}</td>
+          <td data-label="Trastero">{{ c.trastero }}</td>
+          <td data-label="Firma">{{ c.fechafirma }}</td>
+          <td data-label="Acciones"><a href="/editar/{{ c.id }}">Editar</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     {% else %}
-      <p style="text-align:center;">No hay contratos registrados.</p>
+    <p style="text-align:center; font-style: italic;">No hay contratos registrados aún.</p>
     {% endif %}
+
     <div class="volver">
-      <a href="/">← Nuevo contrato</a>
+      <a href="/">← Crear nuevo contrato</a>
     </div>
   </div>
 </body>

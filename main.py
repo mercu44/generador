@@ -6,17 +6,17 @@ import unicodedata
 import re
 import os
 
-
 # Inicialización
-app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
-os.makedirs(os.path.join(basedir, "data"), exist_ok=True)
-app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data', 'contratos.db')}"
+
+# ✅ Asegura que la carpeta "data" exista antes de configurar la DB
+data_dir = os.path.join(basedir, "data")
+os.makedirs(data_dir, exist_ok=True)
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(data_dir, 'contratos.db')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Crear carpeta de base de datos
-
-# Inicializar base de datos
 db = SQLAlchemy(app)
 
 # Modelo de datos
@@ -34,16 +34,20 @@ class Contrato(db.Model):
     preciototal = db.Column(db.Float)
     fechafirma = db.Column(db.String(50))
 
-
-# Limpiar nombre para nombre de archivo
+# Limpieza del nombre de archivo
 def limpiar_nombre(nombre):
     nombre = str(nombre)
     nombre = unicodedata.normalize('NFKD', nombre).encode('ascii', 'ignore').decode('ascii')
     nombre = re.sub(r'[^\w]+', '_', nombre)
     return nombre.strip('_').lower()
 
+# Ruta para crear la BD manualmente en Render
+@app.route('/initdb')
+def initdb():
+    db.create_all()
+    return "✅ Base de datos creada correctamente."
 
-# Formulario de creación y edición
+# Formulario principal y edición
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def formulario(id=None):
@@ -87,15 +91,13 @@ def formulario(id=None):
 
     return render_template("formulario.html", contrato=contrato)
 
-
-# Historial de contratos
+# Historial
 @app.route('/historial')
 def historial():
     contratos = Contrato.query.order_by(Contrato.id.desc()).all()
     return render_template("historial.html", contratos=contratos)
 
-
-# Inicialización al ejecutar
+# Ejecución local
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
